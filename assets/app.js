@@ -94,4 +94,51 @@
       }
     }
   });
+
+  // Hover Preview Tooltip for Reference Tags
+  const tooltip = document.getElementById('preview-tooltip');
+  if (tooltip) {
+    document.addEventListener('mouseover', (e) => {
+      const tag = e.target.closest('.ref-tag[data-preview-title]');
+      if (!tag) return;
+
+      const title = tag.getAttribute('data-preview-title');
+      const meta = tag.getAttribute('data-preview-meta');
+      const snippet = tag.getAttribute('data-preview-snippet');
+      if (!title || !snippet) return;
+
+      tooltip.innerHTML = `
+        <div class="preview-tooltip-header">
+          <span class="preview-tooltip-title">${escapeHtml(title)}</span>
+          <span class="preview-tooltip-meta">${escapeHtml(meta)}</span>
+        </div>
+        <div class="preview-tooltip-snippet">${escapeHtml(snippet)}</div>
+      `;
+
+      const rect = tag.getBoundingClientRect();
+      const tooltipWidth = 340;
+      let top = rect.bottom + 8;
+      let left = rect.left;
+
+      if (left + tooltipWidth > window.innerWidth - 16) {
+        left = window.innerWidth - tooltipWidth - 16;
+      }
+      if (left < 16) left = 16;
+      if (top + 140 > window.innerHeight) {
+        top = Math.max(10, rect.top - 120);
+      }
+
+      tooltip.style.top = `${top}px`;
+      tooltip.style.left = `${left}px`;
+      tooltip.classList.add('open');
+      tooltip.setAttribute('aria-hidden', 'false');
+    });
+
+    document.addEventListener('mouseout', (e) => {
+      if (e.target.closest('.ref-tag')) {
+        tooltip.classList.remove('open');
+        tooltip.setAttribute('aria-hidden', 'true');
+      }
+    });
+  }
 })();

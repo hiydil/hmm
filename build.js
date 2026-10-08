@@ -202,9 +202,11 @@ function processReferences(text, currentEntry, entriesByRef) {
     if (found) {
       currentEntry.outboundRefs.add(found.id);
       found.inboundRefs.push({ from: currentEntry, label: currentEntry.title });
-      return `<a href="${found.url}" class="ref-link">${escapeHtml(label)}</a>`;
+      const snippet = extractSnippet(found.sections[0]?.rawText || '', 180);
+      const meta = `${found.lang}${found.type !== 'word' ? ' · ' + found.type : ''}`;
+      return `<a href="${found.url}" class="ref-tag" data-preview-title="${escapeHtml(found.title)}" data-preview-meta="${escapeHtml(meta)}" data-preview-snippet="${escapeHtml(snippet)}"><span class="ref-tag-lang">${found.lang}</span><span class="ref-tag-label">${escapeHtml(label)}</span></a>`;
     } else {
-      return `<span class="ref-stub" title="not yet documented: @${lang}${sub ? '.' + sub : ''}(${target})">${escapeHtml(label)}</span>`;
+      return `<span class="ref-tag ref-stub" title="not yet documented: @${lang}${sub ? '.' + sub : ''}(${target})"><span class="ref-tag-lang">${lang}</span><span class="ref-tag-label">${escapeHtml(label)}</span></span>`;
     }
   });
 }
@@ -265,6 +267,7 @@ function renderLayout({ title, content, activeNav = '', languages = [] }) {
     </nav>
   </footer>
 
+  <div id="preview-tooltip" class="preview-tooltip" aria-hidden="true"></div>
   <script src="/assets/app.js"></script>
 </body>
 </html>`;
@@ -370,6 +373,7 @@ function renderHomePage(languages) {
     </nav>
   </main>
 
+  <div id="preview-tooltip" class="preview-tooltip" aria-hidden="true"></div>
   <script src="/assets/app.js"></script>
 </body>
 </html>`;

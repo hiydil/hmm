@@ -1,5 +1,6 @@
 /* ==========================================================================
-   Minimal Lexicon Theme - Spacious, Typographic & Forest Green Accents
+   hmm - Autumnal Forest Green & Warm Brown Theme
+   Warm Parchment, Deep Woodland Green, Chestnut Bark, Weathered Cedar
    ========================================================================== */
 
 :root {
@@ -7,49 +8,66 @@
   --font-body: "Newsreader", "Charter", "Georgia", "Iowan Old Style", serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
-  /* Warm Bookish Natural Light Palette */
-  --bg: #f9f8f5;
-  --text: #1d211e;
-  --muted: #5e6861;
-  --faint: #8d9890;
-  --border: #e2e6e2;
-  --link: #1e4a35;
-  --link-underline: rgba(30, 74, 53, 0.35);
-  --link-hover: #123324;
-  --highlight: #f0f4f1;
-  --search-bg: #ffffff;
+  /* Autumnal Warm Parchment Light Palette */
+  --bg: #f7f3ec;
+  --text: #26211c;
+  --muted: #6b6053;
+  --faint: #968a7b;
+  --border: #e1d8cc;
+  --border-subtle: #eae3d7;
 
-  /* Forest Green Signatures */
-  --forest-primary: #1e4a35;
-  --forest-hover: #123324;
-  --forest-light: #ebf3ee;
-  --forest-border: #c8dacd;
-  --forest-border-subtle: #dbe6de;
-  --forest-tag-text: #183e2c;
-  --forest-tag-lang: #2d6b4a;
+  /* Forest Green */
+  --forest-deep: #1d4530;
+  --forest-leaf: #27553c;
+  --forest-moss: #3a6b4f;
+  --forest-wash: #eaf0e8;
+  --forest-border: #c3d4c5;
+
+  /* Warm Autumn Brown & Chestnut */
+  --brown-bark: #714323;
+  --brown-chestnut: #85502a;
+  --brown-acorn: #9c6237;
+  --brown-wash: #f0e9df;
+  --brown-border: #dfcfbc;
+
+  /* Interaction & Links */
+  --link: #1d4530;
+  --link-underline: rgba(29, 69, 48, 0.35);
+  --link-hover: #714323;
+  --highlight: #efe8dc;
+  --search-bg: #fcfbfa;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    /* Soft Dark Obsidian with Pine & Moss Accents */
-    --bg: #141715;
-    --text: #e1e7e2;
-    --muted: #8d9a90;
-    --faint: #636f66;
-    --border: #242c26;
-    --link: #6db98d;
-    --link-underline: rgba(109, 185, 141, 0.4);
-    --link-hover: #8fd0aa;
-    --highlight: #1b221d;
-    --search-bg: #181f1a;
+    /* Autumn Hearth & Midnight Woodland */
+    --bg: #151513;
+    --text: #ece5d9;
+    --muted: #9c9284;
+    --faint: #6e6559;
+    --border: #2c2823;
+    --border-subtle: #24201c;
 
-    --forest-primary: #5ba579;
-    --forest-hover: #79bf94;
-    --forest-light: #18271e;
-    --forest-border: #2a4534;
-    --forest-border-subtle: #22372a;
-    --forest-tag-text: #8ed2a9;
-    --forest-tag-lang: #63a47d;
+    /* Forest Moss */
+    --forest-deep: #62aa7d;
+    --forest-leaf: #73ba8e;
+    --forest-moss: #88cfa3;
+    --forest-wash: #19241d;
+    --forest-border: #2c4233;
+
+    /* Warm Amber Chestnut */
+    --brown-bark: #c78d5e;
+    --brown-chestnut: #d99f6f;
+    --brown-acorn: #e8b182;
+    --brown-wash: #25201a;
+    --brown-border: #44372a;
+
+    /* Interaction & Links */
+    --link: #73ba8e;
+    --link-underline: rgba(115, 186, 142, 0.4);
+    --link-hover: #d99f6f;
+    --highlight: #201e1a;
+    --search-bg: #1a1916;
   }
 }
 
@@ -77,6 +95,7 @@ body {
   min-height: 100%;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* ==========================================================================
@@ -101,15 +120,16 @@ body.home-body {
 
 .home-title {
   font-family: var(--font-body);
-  font-size: 3.8rem;
+  font-size: 4rem;
   font-weight: 500;
   letter-spacing: -0.04em;
   margin-bottom: 2rem;
-  color: var(--forest-primary);
+  color: var(--forest-deep);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
 }
 
 .home-search-wrapper {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.75rem;
   text-align: left;
 }
 
@@ -117,13 +137,14 @@ body.home-body {
   font-size: 1.15rem;
   padding: 0.95rem 1.25rem;
   border-radius: 8px;
-  border-color: var(--forest-border);
-  box-shadow: 0 2px 10px rgba(30, 74, 53, 0.04);
+  background-color: var(--search-bg);
+  border: 1px solid var(--border);
+  box-shadow: 0 3px 12px rgba(38, 33, 28, 0.04);
 }
 
 .home-search-input:focus {
-  border-color: var(--forest-primary);
-  box-shadow: 0 0 0 3px rgba(30, 74, 53, 0.12);
+  border-color: var(--forest-deep);
+  box-shadow: 0 0 0 3px rgba(39, 85, 60, 0.14);
 }
 
 .home-languages {
@@ -135,12 +156,12 @@ body.home-body {
 .home-lang-link {
   color: var(--muted);
   text-decoration: none;
-  padding: 0.2rem 0.4rem;
+  padding: 0.2rem 0.5rem;
   transition: color 0.15s ease;
 }
 
 .home-lang-link:hover {
-  color: var(--forest-primary);
+  color: var(--brown-bark);
   text-decoration: underline;
   text-underline-offset: 4px;
 }
@@ -169,9 +190,9 @@ header.site-header {
 .brand {
   font-family: var(--font-body);
   font-weight: 600;
-  font-size: 1.45rem;
+  font-size: 1.5rem;
   letter-spacing: -0.03em;
-  color: var(--forest-primary);
+  color: var(--forest-deep);
   text-decoration: none;
   transition: opacity 0.15s ease;
 }
@@ -192,7 +213,7 @@ nav.site-nav a, nav.footer-nav a {
 }
 
 nav.site-nav a:hover, nav.site-nav a.active, nav.footer-nav a:hover {
-  color: var(--forest-primary);
+  color: var(--forest-deep);
   text-decoration: underline;
   text-underline-offset: 4px;
 }
@@ -221,8 +242,8 @@ nav.site-nav a:hover, nav.site-nav a.active, nav.footer-nav a:hover {
 }
 
 .search-input:focus {
-  border-color: var(--forest-primary);
-  box-shadow: 0 0 0 3px rgba(30, 74, 53, 0.1);
+  border-color: var(--forest-deep);
+  box-shadow: 0 0 0 3px rgba(39, 85, 60, 0.12);
 }
 
 .search-dropdown {
@@ -237,7 +258,7 @@ nav.site-nav a:hover, nav.site-nav a.active, nav.footer-nav a:hover {
   overflow-y: auto;
   z-index: 100;
   display: none;
-  box-shadow: 0 10px 25px rgba(20, 50, 35, 0.08);
+  box-shadow: 0 12px 28px rgba(38, 33, 28, 0.09);
 }
 
 .search-dropdown.open {
@@ -247,7 +268,7 @@ nav.site-nav a:hover, nav.site-nav a.active, nav.footer-nav a:hover {
 .search-item {
   display: block;
   padding: 0.85rem 1.15rem;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border-subtle);
   text-decoration: none;
   color: var(--text);
   font-family: var(--font-serif);
@@ -259,22 +280,23 @@ nav.site-nav a:hover, nav.site-nav a.active, nav.footer-nav a:hover {
 }
 
 .search-item:hover, .search-item.selected {
-  background: var(--forest-light);
+  background: var(--forest-wash);
 }
 
 .search-item-title {
   font-weight: 600;
   font-family: var(--font-body);
   font-size: 1.15rem;
-  color: var(--forest-primary);
+  color: var(--forest-deep);
 }
 
 .search-item-meta {
-  color: var(--forest-tag-lang);
+  color: var(--brown-bark);
   font-size: 0.75rem;
   margin-left: 0.6rem;
   text-transform: uppercase;
   font-family: var(--font-mono);
+  font-weight: 600;
 }
 
 .search-item-snippet {
@@ -306,10 +328,11 @@ h1.entry-title {
 .entry-tag {
   font-family: var(--font-mono);
   font-size: 0.85rem;
-  color: var(--forest-tag-lang);
-  background: var(--forest-light);
-  padding: 0.15rem 0.45rem;
-  border-radius: 3px;
+  color: var(--brown-bark);
+  background: var(--brown-wash);
+  border: 1px solid var(--brown-border);
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
   font-weight: normal;
   margin-left: 0.6rem;
   vertical-align: middle;
@@ -325,7 +348,7 @@ h1.entry-title {
   font-weight: 600;
   margin-top: 1rem;
   margin-bottom: 1rem;
-  color: var(--forest-primary);
+  color: var(--brown-chestnut);
   letter-spacing: -0.01em;
 }
 
@@ -338,14 +361,14 @@ h1.entry-title {
 }
 
 .analysis-block blockquote {
-  border-left: 3px solid var(--forest-primary);
+  border-left: 3px solid var(--brown-bark);
   padding-left: 1.25rem;
   margin: 1.75rem 0;
   color: var(--muted);
   font-style: italic;
-  background: var(--forest-light);
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  background: var(--brown-wash);
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
   border-radius: 0 4px 4px 0;
 }
 
@@ -359,12 +382,12 @@ h1.entry-title {
 
 .analysis-divider {
   border: 0;
-  border-top: 1px solid var(--forest-border-subtle);
+  border-top: 1px solid var(--border);
   margin: 3.5rem 0;
 }
 
 /* ==========================================================================
-   Cross-References (Forest Green Tag Style)
+   Cross-References (Autumnal Forest Green & Warm Bark Tags)
    ========================================================================== */
 
 .ref-tag {
@@ -373,10 +396,10 @@ h1.entry-title {
   gap: 0.35rem;
   padding: 0.12rem 0.55rem;
   margin: 0 0.15rem;
-  background-color: var(--forest-light);
+  background-color: var(--forest-wash);
   border: 1px solid var(--forest-border);
   border-radius: 4px;
-  color: var(--forest-tag-text);
+  color: var(--forest-deep);
   text-decoration: none;
   font-family: var(--font-serif);
   font-size: 0.88em;
@@ -387,17 +410,17 @@ h1.entry-title {
 }
 
 .ref-tag:hover {
-  background-color: var(--forest-border);
-  border-color: var(--forest-primary);
-  color: var(--forest-hover);
+  background-color: var(--brown-wash);
+  border-color: var(--brown-bark);
+  color: var(--brown-bark);
 }
 
 .ref-tag-lang {
   font-family: var(--font-mono);
   font-size: 0.72em;
-  color: var(--forest-tag-lang);
+  color: var(--brown-bark);
   text-transform: uppercase;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
   font-weight: 600;
 }
 
@@ -415,18 +438,18 @@ h1.entry-title {
 }
 
 /* ==========================================================================
-   Hover Preview Tooltip (Forest Green Accented)
+   Hover Preview Tooltip (Forest & Cedar Wood)
    ========================================================================== */
 
 .preview-tooltip {
   position: fixed;
   background: var(--search-bg);
   color: var(--text);
-  border: 1px solid var(--forest-border);
-  border-top: 3px solid var(--forest-primary);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--forest-deep);
   border-radius: 6px;
-  padding: 1rem 1.25rem;
-  box-shadow: 0 8px 24px rgba(20, 50, 35, 0.12);
+  padding: 1.1rem 1.3rem;
+  box-shadow: 0 10px 28px rgba(38, 33, 28, 0.14);
   max-width: 340px;
   z-index: 200;
   pointer-events: none;
@@ -453,13 +476,13 @@ h1.entry-title {
   font-family: var(--font-body);
   font-size: 1.15rem;
   font-weight: 600;
-  color: var(--forest-primary);
+  color: var(--forest-deep);
 }
 
 .preview-tooltip-meta {
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  color: var(--forest-tag-lang);
+  color: var(--brown-bark);
   text-transform: uppercase;
   font-weight: 600;
 }
@@ -489,7 +512,7 @@ h1.entry-title {
   text-transform: uppercase;
   letter-spacing: 0.06em;
   margin-bottom: 0.85rem;
-  color: var(--forest-tag-lang);
+  color: var(--brown-bark);
   font-weight: 600;
 }
 
@@ -501,15 +524,16 @@ h1.entry-title {
 }
 
 .backlinks-list a {
-  color: var(--forest-primary);
+  color: var(--forest-deep);
   text-decoration: underline;
   text-decoration-color: var(--link-underline);
   text-underline-offset: 4px;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
 }
 
 .backlinks-list a:hover {
-  color: var(--forest-hover);
-  text-decoration-color: var(--forest-primary);
+  color: var(--brown-bark);
+  text-decoration-color: var(--brown-bark);
 }
 
 /* ==========================================================================
@@ -522,13 +546,13 @@ h1.entry-title {
 
 .index-section h2 {
   font-family: var(--font-serif);
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   font-weight: 600;
   margin-bottom: 1.25rem;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid var(--border);
   letter-spacing: -0.01em;
-  color: var(--forest-primary);
+  color: var(--forest-deep);
 }
 
 .entry-list {
@@ -544,15 +568,16 @@ h1.entry-title {
 }
 
 .entry-list a {
-  color: var(--forest-primary);
+  color: var(--forest-deep);
   text-decoration: none;
   font-size: 1.3rem;
   font-weight: 500;
   line-height: 1.3;
+  transition: color 0.15s ease;
 }
 
 .entry-list a:hover {
-  color: var(--forest-hover);
+  color: var(--brown-bark);
   text-decoration: underline;
   text-underline-offset: 4px;
 }
@@ -568,7 +593,7 @@ h1.entry-title {
 .entry-list .meta {
   font-family: var(--font-mono);
   font-size: 0.8rem;
-  color: var(--forest-tag-lang);
+  color: var(--brown-bark);
   flex-shrink: 0;
 }
 
@@ -590,10 +615,11 @@ footer.site-footer {
 footer.site-footer a {
   color: var(--muted);
   text-decoration: none;
+  transition: color 0.15s ease;
 }
 
 footer.site-footer a:hover {
-  color: var(--forest-primary);
+  color: var(--brown-bark);
   text-decoration: underline;
   text-underline-offset: 3px;
 }

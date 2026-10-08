@@ -6,16 +6,25 @@
   'use strict';
 
   let searchIndex = null;
+  let isIndexLoading = false;
 
   async function loadSearchIndex() {
-    if (searchIndex) return;
+    if (searchIndex || isIndexLoading) return;
+    isIndexLoading = true;
     try {
       const res = await fetch('/search-index.json');
-      if (res.ok) searchIndex = await res.json();
+      if (res.ok) {
+        searchIndex = await res.json();
+      }
     } catch (e) {
       console.warn('Could not load search index for editor suggestions', e);
+    } finally {
+      isIndexLoading = false;
     }
   }
+
+  // Preload search index immediately
+  loadSearchIndex();
 
   // Build the Editor Modal DOM
   const editorOverlay = document.createElement('div');
@@ -33,8 +42,6 @@
       </div>
       <div class="dev-editor-body-wrapper" id="dev-body-wrapper">
         <textarea class="dev-editor-textarea" id="dev-textarea" spellcheck="false" placeholder="Write entry in Markdown... Multiple analyses separated by ---"></textarea>
-        <!-- Suggestion Autocomplete Popup -->
-        <div class="dev-suggest-popup" id="dev-suggest-popup"></div>
       </div>
       <div class="dev-editor-footer">
         <span>Type <code>@</code> to search & insert references &middot; <code>---</code> for multiple analyses</span>
@@ -43,6 +50,12 @@
     </div>
   `;
   document.body.appendChild(editorOverlay);
+
+  // Floating Suggestion Autocomplete Popup (appended directly to body for unconstrained fixed positioning)
+  const suggestPopup = document.createElement('div');
+  suggestPopup.className = 'dev-suggest-popup';
+  suggestPopup.id = 'dev-suggest-popup';
+  document.body.appendChild(suggestPopup);
 
   // Build the New Entry Modal DOM
   const newOverlay = document.createElement('div');
@@ -85,8 +98,6 @@
   const btnSave = document.getElementById('dev-btn-save');
   const btnCancel = document.getElementById('dev-btn-cancel');
   const wordCount = document.getElementById('dev-word-count');
-  const suggestPopup = document.getElementById('dev-suggest-popup');
-  const bodyWrapper = document.getElementById('dev-body-wrapper');
 
   let activeFilepath = null;
   let activeSuggestions = [];
@@ -98,7 +109,7 @@
     filepathLabel.textContent = filepath;
     statusMsg.textContent = 'Loading...';
     editorOverlay.classList.add('open');
-    loadSearchIndex();
+    await loadSearchIndex();
 
     try {
       const res = await fetch(`/api/raw?filepath=${encodeURIComponent(filepath)}`);
@@ -164,6 +175,17 @@
     checkReferenceTrigger();
   });
 
+  textarea.addEventListener('click', () => {
+    checkReferenceTrigger();
+  });
+
+  textarea.addEventListener('keyup', (e) => {
+    // Check on cursor moves if suggestions aren't active
+    if (!['ArrowUp', 'ArrowDown', 'Enter', 'Tab', 'Escape'].includes(e.key)) {
+      checkReferenceTrigger();
+    }
+  });
+
   btnSave.addEventListener('click', saveEntry);
   btnCancel.addEventListener('click', closeEditor);
 
@@ -182,13 +204,17 @@
     return `@${item.lang}.${item.type}(${item.term})`;
   }
 
-  function checkReferenceTrigger() {
-    if (!searchIndex) return;
+  async function checkReferenceTrigger() {
+    if (!searchIndex) {
+      await loadSearchIndex();
+      if (!searchIndex) return;
+    }
 
     const caretPos = textarea.selectionStart;
     const textBeforeCaret = textarea.value.slice(0, caretPos);
 
     // Look for an unclosed '@' before caret on the current line
+    // e.g. matches "@", "@en", "@Halb", "@-ism"
     const match = textBeforeCaret.match(/@([a-zA-Z0-9_\u00C0-\u024F\u1E00-\u1EFF.-]*)$/);
     if (!match) {
       closeSuggestions();
@@ -216,10 +242,10 @@
 
     // Score & sort: exact matches and prefix matches first
     matches.sort((a, b) => {
-      const aSyntax = getRefSyntax(a).toLowerCase();
-      const bSyntax = getRefSyntax(b).toLowerCase();
       const aTerm = a.term.toLowerCase();
       const bTerm = b.term.toLowerCase();
+      const aSyntax = getRefSyntax(a).toLowerCase();
+      const bSyntax = getRefSyntax(b).toLowerCase();
 
       if (aTerm.startsWith(query) && !bTerm.startsWith(query)) return -1;
       if (!aTerm.startsWith(query) && bTerm.startsWith(query)) return 1;
@@ -265,28 +291,37 @@
   }
 
   function positionSuggestions() {
-    // Position suggestion popup relative to the caret inside textarea
-    const caretCoordinates = getCaretCoordinates(textarea, triggerStartPos);
-    const wrapperRect = bodyWrapper.getBoundingClientRect();
+    const textareaRect = textarea.getBoundingClientRect();
+    const { relTop, relLeft } = getCaretCoordinates(textarea, triggerStartPos);
 
-    let top = caretCoordinates.top - textarea.scrollTop + 28;
-    let left = caretCoordinates.left - textarea.scrollLeft;
+    let screenTop = textareaRect.top + relTop - textarea.scrollTop + 28;
+    let screenLeft = textareaRect.left + relLeft - textarea.scrollLeft;
 
-    // Boundary clamps
-    const popupWidth = 380;
+    const popupWidth = Math.min(380, window.innerWidth - 32);
     const popupHeight = 260;
 
-    if (left + popupWidth > wrapperRect.width - 20) {
-      left = Math.max(20, wrapperRect.width - popupWidth - 20);
+    // Safety checks: if caret calculation is out of visible textarea bounds, fallback to visible spot
+    if (screenTop < textareaRect.top - 10 || screenTop > textareaRect.bottom + 10) {
+      screenTop = textareaRect.top + 40;
     }
-    if (left < 20) left = 20;
-
-    if (top + popupHeight > wrapperRect.height - 10) {
-      top = Math.max(10, top - popupHeight - 34);
+    if (screenLeft < textareaRect.left - 10 || screenLeft > textareaRect.right + 10) {
+      screenLeft = textareaRect.left + 24;
     }
 
-    suggestPopup.style.top = `${top}px`;
-    suggestPopup.style.left = `${left}px`;
+    // Viewport boundary clamps
+    if (screenLeft + popupWidth > window.innerWidth - 16) {
+      screenLeft = window.innerWidth - popupWidth - 16;
+    }
+    if (screenLeft < 16) screenLeft = 16;
+
+    if (screenTop + popupHeight > window.innerHeight - 16) {
+      screenTop = Math.max(16, screenTop - popupHeight - 34);
+    }
+    if (screenTop < 16) screenTop = 16;
+
+    suggestPopup.style.top = `${Math.round(screenTop)}px`;
+    suggestPopup.style.left = `${Math.round(screenLeft)}px`;
+    suggestPopup.style.width = `${popupWidth}px`;
   }
 
   function insertSuggestion(item) {
@@ -366,39 +401,40 @@
     const div = document.createElement('div');
     const styles = window.getComputedStyle(element);
 
-    const properties = [
-      'boxSizing', 'width', 'height', 'overflowX', 'overflowY',
-      'borderTopWidth', 'borderRightWidth', 'borderBottomWidth', 'borderLeftWidth',
-      'paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft',
-      'fontStyle', 'fontVariant', 'fontWeight', 'fontStretch', 'fontSize',
-      'fontSizeAdjust', 'lineHeight', 'fontFamily', 'textAlign', 'textTransform',
-      'textIndent', 'textDecoration', 'letterSpacing', 'wordSpacing', 'tabSize'
-    ];
-
-    div.style.position = 'absolute';
+    div.style.position = 'fixed';
+    div.style.top = '0px';
+    div.style.left = '-9999px';
     div.style.visibility = 'hidden';
+    div.style.pointerEvents = 'none';
+    div.style.width = element.clientWidth + 'px';
+    div.style.padding = styles.padding;
+    div.style.border = styles.border;
+    div.style.fontFamily = styles.fontFamily;
+    div.style.fontSize = styles.fontSize;
+    div.style.fontWeight = styles.fontWeight;
+    div.style.lineHeight = styles.lineHeight;
+    div.style.letterSpacing = styles.letterSpacing;
     div.style.whiteSpace = 'pre-wrap';
     div.style.wordWrap = 'break-word';
+    div.style.boxSizing = 'border-box';
 
-    properties.forEach(prop => {
-      div.style[prop] = styles[prop];
-    });
+    div.textContent = element.value.substring(0, position);
 
-    const text = element.value.substring(0, position);
-    div.textContent = text;
-
-    const span = document.createElement('span');
-    span.textContent = element.value.substring(position) || '.';
-    div.appendChild(span);
+    const marker = document.createElement('span');
+    marker.textContent = '@';
+    div.appendChild(marker);
 
     document.body.appendChild(div);
-    const coordinates = {
-      top: span.offsetTop + parseInt(styles.borderTopWidth, 10),
-      left: span.offsetLeft + parseInt(styles.borderLeftWidth, 10)
-    };
+
+    const divRect = div.getBoundingClientRect();
+    const markerRect = marker.getBoundingClientRect();
+
+    const relTop = markerRect.top - divRect.top;
+    const relLeft = markerRect.left - divRect.left;
+
     document.body.removeChild(div);
 
-    return coordinates;
+    return { relTop, relLeft };
   }
 
   // =========================================================================

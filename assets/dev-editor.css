@@ -142,7 +142,6 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
 .dev-editor-textarea {
@@ -183,16 +182,17 @@
    ========================================================================== */
 
 .dev-suggest-popup {
-  position: absolute;
+  position: fixed;
   background: var(--search-bg);
   border: 1px solid var(--forest-border);
-  border-top: 2px solid var(--forest-deep);
+  border-top: 3px solid var(--forest-deep);
   border-radius: 6px;
-  box-shadow: 0 10px 30px rgba(38, 33, 28, 0.2);
+  box-shadow: 0 12px 36px rgba(38, 33, 28, 0.28);
   width: 380px;
+  max-width: calc(100vw - 32px);
   max-height: 280px;
   overflow-y: auto;
-  z-index: 1050;
+  z-index: 2000;
   display: none;
   font-family: var(--font-serif);
 }

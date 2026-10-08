@@ -286,7 +286,7 @@ function renderLayout({ title, content, activeNav = '', languages = [], isDev = 
 
   <div id="preview-tooltip" class="preview-tooltip" aria-hidden="true"></div>
   <script src="/assets/app.js"></script>
-  ${isDev ? '<script src="/assets/dev-editor.js"></script>' : ''}
+  ${isDev ? '<script src="/assets/marked.js"></script><script src="/assets/dev-editor.js"></script>' : ''}
 </body>
 </html>`;
 }
@@ -411,7 +411,7 @@ function renderHomePage(languages, isDev) {
 
   <div id="preview-tooltip" class="preview-tooltip" aria-hidden="true"></div>
   <script src="/assets/app.js"></script>
-  ${isDev ? '<script src="/assets/dev-editor.js"></script>' : ''}
+  ${isDev ? '<script src="/assets/marked.js"></script><script src="/assets/dev-editor.js"></script>' : ''}
 </body>
 </html>`;
 }

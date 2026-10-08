@@ -81,6 +81,7 @@ function parseMarkdown(rawContent, fallbackTitle) {
 function scanDictionary(rootDir) {
   const entries = [];
   const entriesByRef = new Map();
+  const languagesSet = new Set();
 
   const dirs = fs.readdirSync(rootDir, { withFileTypes: true });
 
@@ -89,6 +90,7 @@ function scanDictionary(rootDir) {
     const lang = dirent.name.toLowerCase();
     if (!KNOWN_LANGUAGES.includes(lang) && !/^[a-z]{2,3}$/.test(lang)) continue;
 
+    languagesSet.add(lang);
     const langDir = path.join(rootDir, dirent.name);
 
     for (const f of fs.readdirSync(langDir, { withFileTypes: true })) {
@@ -141,7 +143,8 @@ function scanDictionary(rootDir) {
     }
   }
 
-  return { entries, entriesByRef };
+  const languages = Array.from(languagesSet).sort();
+  return { entries, entriesByRef, languages };
 }
 
 function registerLookup(map, entry) {
@@ -224,7 +227,11 @@ function escapeHtml(str) {
     .replace(/"/g, '&quot;');
 }
 
-function renderLayout({ title, content, activeNav = '' }) {
+function renderLayout({ title, content, activeNav = '', languages = [] }) {
+  const navLinks = languages.map(l =>
+    `<a href="/${l}/" class="${activeNav === l ? 'active' : ''}">${l}</a>`
+  ).join('\n        ');
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -236,13 +243,9 @@ function renderLayout({ title, content, activeNav = '' }) {
 <body>
   <header class="site-header">
     <div class="header-top">
-      <a href="/" class="brand">lexicon</a>
+      <a href="/" class="brand">hmm</a>
       <nav class="site-nav">
-        <a href="/en/" class="${activeNav === 'en' ? 'active' : ''}">en</a>
-        <a href="/tr/" class="${activeNav === 'tr' ? 'active' : ''}">tr</a>
-        <a href="/de/" class="${activeNav === 'de' ? 'active' : ''}">de</a>
-        <a href="/patterns/" class="${activeNav === 'patterns' ? 'active' : ''}">patterns</a>
-        <a href="/coinage/" class="${activeNav === 'coinage' ? 'active' : ''}">coinage</a>
+        ${navLinks}
       </nav>
     </div>
     <div class="search-wrapper">
@@ -256,11 +259,10 @@ function renderLayout({ title, content, activeNav = '' }) {
   </main>
 
   <footer class="site-footer">
-    <span>lexicon</span>
-    <div>
-      <a href="/patterns/">patterns</a> &middot;
-      <a href="/coinage/">coinage</a>
-    </div>
+    <span>hmm</span>
+    <nav class="footer-nav">
+      ${navLinks}
+    </nav>
   </footer>
 
   <script src="/assets/app.js"></script>
@@ -268,8 +270,8 @@ function renderLayout({ title, content, activeNav = '' }) {
 </html>`;
 }
 
-function renderEntryPage(entry) {
-  const sectionsHtml = entry.sections.map((s, idx) => {
+function renderEntryPage(entry, languages) {
+  const sectionsHtml = entry.sections.map((s) => {
     return `
       <section class="analysis-block">
         ${s.title ? `<h3>${escapeHtml(s.title)}</h3>` : ''}
@@ -302,6 +304,7 @@ function renderEntryPage(entry) {
   return renderLayout({
     title: `${entry.title} (${entry.lang})`,
     activeNav: entry.lang,
+    languages,
     content: `
       <article>
         <header class="entry-header">
@@ -314,12 +317,13 @@ function renderEntryPage(entry) {
   });
 }
 
-function renderIndexGroup(title, entries, activeNav) {
+function renderIndexGroup(title, entries, activeNav, languages) {
   const sorted = [...entries].sort((a, b) => a.title.localeCompare(b.title));
 
   return renderLayout({
     title,
     activeNav,
+    languages,
     content: `
       <div class="index-section">
         <h2>${escapeHtml(title)}</h2>
@@ -339,45 +343,43 @@ function renderIndexGroup(title, entries, activeNav) {
   });
 }
 
-function renderHomePage(entries) {
-  const byLang = {};
-  for (const e of entries) {
-    if (!byLang[e.lang]) byLang[e.lang] = [];
-    byLang[e.lang].push(e);
-  }
+function renderHomePage(languages) {
+  const langPills = languages.map(l =>
+    `<a href="/${l}/" class="home-lang-link">${l}</a>`
+  ).join(' &middot; ');
 
-  const langsHtml = Object.keys(byLang).sort().map(lang => {
-    const list = byLang[lang].sort((a, b) => a.title.localeCompare(b.title));
-    return `
-      <div class="index-section">
-        <h2>${lang}</h2>
-        <ul class="entry-list">
-          ${list.map(item => `
-            <li>
-              <div>
-                <a href="${item.url}">${escapeHtml(item.title)}</a>
-                <span class="snippet">${escapeHtml(extractSnippet(item.sections[0]?.rawText || ''))}</span>
-              </div>
-              <span class="meta">${item.type !== 'word' ? item.type : ''}</span>
-            </li>
-          `).join('')}
-        </ul>
-      </div>
-    `;
-  }).join('\n');
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>hmm</title>
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body class="home-body">
+  <main class="home-main">
+    <h1 class="home-title">hmm</h1>
 
-  return renderLayout({
-    title: 'lexicon',
-    activeNav: '',
-    content: langsHtml
-  });
+    <div class="search-wrapper home-search-wrapper">
+      <input type="search" id="search-input" class="search-input home-search-input" placeholder="search entries..." autocomplete="off" autofocus>
+      <div id="search-dropdown" class="search-dropdown"></div>
+    </div>
+
+    <nav class="home-languages">
+      ${langPills}
+    </nav>
+  </main>
+
+  <script src="/assets/app.js"></script>
+</body>
+</html>`;
 }
 
 export async function buildSite() {
   const rootDir = __dirname;
   const distDir = path.join(rootDir, 'dist');
 
-  const { entries, entriesByRef } = scanDictionary(rootDir);
+  const { entries, entriesByRef, languages } = scanDictionary(rootDir);
 
   for (const entry of entries) {
     for (const section of entry.sections) {
@@ -395,7 +397,7 @@ export async function buildSite() {
   for (const entry of entries) {
     const targetDir = path.join(distDir, entry.url.replace(/^\//, ''));
     fs.mkdirSync(targetDir, { recursive: true });
-    fs.writeFileSync(path.join(targetDir, 'index.html'), renderEntryPage(entry), 'utf-8');
+    fs.writeFileSync(path.join(targetDir, 'index.html'), renderEntryPage(entry, languages), 'utf-8');
   }
 
   // Language indexes
@@ -408,20 +410,11 @@ export async function buildSite() {
   for (const [lang, list] of Object.entries(entriesByLang)) {
     const langDir = path.join(distDir, lang);
     fs.mkdirSync(langDir, { recursive: true });
-    fs.writeFileSync(path.join(langDir, 'index.html'), renderIndexGroup(`${lang}`, list, lang), 'utf-8');
+    fs.writeFileSync(path.join(langDir, 'index.html'), renderIndexGroup(lang, list, lang, languages), 'utf-8');
   }
 
-  // Categories: /patterns/ and /coinage/
-  const patternsDir = path.join(distDir, 'patterns');
-  fs.mkdirSync(patternsDir, { recursive: true });
-  fs.writeFileSync(path.join(patternsDir, 'index.html'), renderIndexGroup('patterns', entries.filter(e => e.type === 'pattern'), 'patterns'), 'utf-8');
-
-  const coinageDir = path.join(distDir, 'coinage');
-  fs.mkdirSync(coinageDir, { recursive: true });
-  fs.writeFileSync(path.join(coinageDir, 'index.html'), renderIndexGroup('coinage', entries.filter(e => e.type === 'coinage'), 'coinage'), 'utf-8');
-
-  // Homepage
-  fs.writeFileSync(path.join(distDir, 'index.html'), renderHomePage(entries), 'utf-8');
+  // Homepage: centered search bar
+  fs.writeFileSync(path.join(distDir, 'index.html'), renderHomePage(languages), 'utf-8');
 
   // Static Search index
   const searchIndex = entries.map(e => ({
@@ -442,7 +435,7 @@ export async function buildSite() {
     fs.cpSync(assetsSrc, assetsDist, { recursive: true });
   }
 
-  console.log(`Generated ${entries.length} pages in ./dist`);
+  console.log(`Generated ${entries.length} pages in ./dist with languages: ${languages.join(', ')}`);
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {

@@ -48,7 +48,7 @@
 .dev-editor-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(22, 20, 18, 0.6);
+  background: rgba(22, 20, 18, 0.65);
   backdrop-filter: blur(4px);
   z-index: 1000;
   display: flex;
@@ -77,6 +77,7 @@
   flex-direction: column;
   box-shadow: 0 16px 40px rgba(25, 20, 15, 0.25);
   overflow: hidden;
+  position: relative;
 }
 
 .dev-editor-topbar {
@@ -136,6 +137,14 @@
   border-color: var(--muted);
 }
 
+.dev-editor-body-wrapper {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
 .dev-editor-textarea {
   flex: 1;
   width: 100%;
@@ -167,6 +176,87 @@
 .dev-status-msg {
   color: var(--forest-deep);
   font-weight: 500;
+}
+
+/* ==========================================================================
+   Reference Suggestion Autocomplete Menu
+   ========================================================================== */
+
+.dev-suggest-popup {
+  position: absolute;
+  background: var(--search-bg);
+  border: 1px solid var(--forest-border);
+  border-top: 2px solid var(--forest-deep);
+  border-radius: 6px;
+  box-shadow: 0 10px 30px rgba(38, 33, 28, 0.2);
+  width: 380px;
+  max-height: 280px;
+  overflow-y: auto;
+  z-index: 1050;
+  display: none;
+  font-family: var(--font-serif);
+}
+
+.dev-suggest-popup.open {
+  display: block;
+}
+
+.dev-suggest-header {
+  padding: 0.4rem 0.75rem;
+  background: var(--highlight);
+  border-bottom: 1px solid var(--border);
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  display: flex;
+  justify-content: space-between;
+}
+
+.dev-suggest-item {
+  display: flex;
+  flex-direction: column;
+  padding: 0.55rem 0.85rem;
+  border-bottom: 1px solid var(--border-subtle);
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+}
+
+.dev-suggest-item:last-child {
+  border-bottom: none;
+}
+
+.dev-suggest-item:hover, .dev-suggest-item.selected {
+  background: var(--forest-wash);
+}
+
+.dev-suggest-item-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.dev-suggest-term {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--forest-deep);
+}
+
+.dev-suggest-syntax {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--brown-bark);
+}
+
+.dev-suggest-snippet {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 0.15rem;
 }
 
 /* New Entry Modal */

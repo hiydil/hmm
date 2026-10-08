@@ -112,12 +112,58 @@
 .dev-topbar-center {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.75rem;
+}
+
+.dev-mode-group {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.dev-mode-label {
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.dev-mode-pills {
+  display: inline-flex;
+  background: var(--search-bg);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 2px;
+  gap: 2px;
+}
+
+.dev-mode-pill {
+  font-family: var(--font-serif);
+  font-size: 0.8rem;
+  padding: 0.2rem 0.55rem;
+  border: none;
+  border-radius: 3px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.12s ease;
+  line-height: 1.2;
+}
+
+.dev-mode-pill:hover {
+  color: var(--text);
+  background: var(--highlight);
+}
+
+.dev-mode-pill.active {
+  background: var(--forest-deep);
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .dev-tool-select, .dev-view-select {
   font-family: var(--font-serif);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   padding: 0.25rem 0.6rem;
   border: 1px solid var(--border);
   border-radius: 4px;
@@ -318,7 +364,7 @@
    ========================================================================== */
 
 .dev-guide-drawer {
-  width: 320px;
+  width: 340px;
   background: var(--highlight);
   border-left: 1px solid var(--border);
   display: flex;
@@ -333,7 +379,7 @@
 }
 
 .dev-guide-top {
-  padding: 0.75rem 1rem;
+  padding: 0.65rem 1rem;
   border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
@@ -345,6 +391,77 @@
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--brown-bark);
+}
+
+.dev-guide-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.dev-guide-tab {
+  flex: 1;
+  font-family: var(--font-serif);
+  font-size: 0.8rem;
+  padding: 0.5rem 0.25rem;
+  text-align: center;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.dev-guide-tab:hover {
+  color: var(--forest-deep);
+  background: var(--forest-wash);
+}
+
+.dev-guide-tab.active {
+  color: var(--forest-deep);
+  border-bottom-color: var(--forest-deep);
+  font-weight: 600;
+  background: var(--highlight);
+}
+
+.dev-guide-mode-banner {
+  padding: 0.4rem 0.85rem;
+  background: var(--highlight);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-height: 34px;
+}
+
+.dev-guide-mode-status {
+  font-size: 0.75rem;
+  color: var(--forest-leaf);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.dev-guide-switch-mode-btn {
+  font-family: var(--font-serif);
+  font-size: 0.75rem;
+  color: var(--brown-bark);
+  background: var(--brown-wash);
+  border: 1px solid var(--brown-border);
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.12s ease;
+  width: 100%;
+  text-align: center;
+}
+
+.dev-guide-switch-mode-btn:hover {
+  background: var(--brown-bark);
+  color: #ffffff;
 }
 
 .dev-guide-search {

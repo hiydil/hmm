@@ -35,38 +35,44 @@
   const ARABIC_GUIDE = [
     { char: 'ا', name: 'Alif', key: 'a', desc: 'Long vowel a / alif' },
     { char: 'آ', name: 'Alif Madda', key: 'aa / A', desc: 'Alif with madda' },
-    { char: 'ء', name: 'Hamza', key: "' / 2", desc: 'Glottal stop' },
-    { char: 'أ', name: 'Alif Hamza', key: "a' / 2a", desc: 'Alif with hamza above' },
+    { char: 'أ', name: 'Alif Hamza Above', key: "a' / 2a", desc: 'Alif with hamza above' },
     { char: 'إ', name: 'Alif Hamza Below', key: "i' / I", desc: 'Alif with hamza below' },
+    { char: 'ء', name: 'Hamza', key: "' / 2", desc: 'Glottal stop' },
+    { char: 'ؤ', name: 'Waaw Hamza', key: "w' / 2w", desc: 'Waw with hamza' },
+    { char: 'ئ', name: 'Yaa Hamza', key: "y' / 2y", desc: 'Yaa with hamza' },
     { char: 'ب', name: 'Baa', key: 'b', desc: 'Voiced bilabial stop' },
     { char: 'ت', name: 'Taa', key: 't', desc: 'Voiceless dental stop' },
     { char: 'ة', name: 'Taa Marbuta', key: 'ta / ah', desc: 'Feminine ending marker' },
-    { char: 'ث', name: 'Thaa', key: 'th', desc: 'Voiceless interdental (as in "think")' },
+    { char: 'ث', name: 'Thaa', key: 'th', desc: 'Voiceless interdental ("think")' },
     { char: 'ج', name: 'Jeem', key: 'j', desc: 'Voiced postalveolar affricate' },
     { char: 'ح', name: 'Haa (pharyngeal)', key: 'H / 7 / hh', desc: 'Voiceless pharyngeal fricative' },
-    { char: 'خ', name: 'Khaa', key: 'kh / 5 / x', desc: 'Voiceless velar fricative (as in "loch")' },
+    { char: 'خ', name: 'Khaa', key: 'kh / 5 / x', desc: 'Voiceless velar fricative ("loch")' },
     { char: 'د', name: 'Daal', key: 'd', desc: 'Voiced dental stop' },
-    { char: 'ذ', name: 'Dhaal', key: 'dh', desc: 'Voiced interdental (as in "this")' },
+    { char: 'ذ', name: 'Dhaal', key: 'dh', desc: 'Voiced interdental ("this")' },
     { char: 'ر', name: 'Raa', key: 'r', desc: 'Alveolar trill / tap' },
     { char: 'ز', name: 'Zayn', key: 'z', desc: 'Voiced alveolar fricative' },
     { char: 'س', name: 'Seen', key: 's', desc: 'Voiceless alveolar fricative' },
-    { char: 'ش', name: 'Sheen', key: 'sh', desc: 'Voiceless postalveolar (as in "ship")' },
+    { char: 'ش', name: 'Sheen', key: 'sh', desc: 'Voiceless postalveolar ("ship")' },
     { char: 'ص', name: 'Saad (emphatic)', key: 'S / 9 / ss', desc: 'Emphatic voiceless alveolar' },
     { char: 'ض', name: 'Daad (emphatic)', key: 'D / dd', desc: 'Emphatic voiced dental stop' },
     { char: 'ط', name: 'Taa (emphatic)', key: 'T / 6 / tt', desc: 'Emphatic voiceless dental stop' },
     { char: 'ظ', name: 'Zaa (emphatic)', key: 'Z / zz', desc: 'Emphatic voiced interdental' },
-    { char: 'ع', name: 'Ayn', key: "3 / c / '", desc: 'Voiced pharyngeal fricative' },
-    { char: 'غ', name: 'Ghayn', key: 'gh', desc: 'Voiced velar fricative (French r)' },
+    { char: 'ع', name: 'Ayn', key: '3 / c', desc: 'Voiced pharyngeal fricative' },
+    { char: 'غ', name: 'Ghayn', key: 'gh / g', desc: 'Voiced velar fricative ("French r")' },
     { char: 'ف', name: 'Faa', key: 'f', desc: 'Voiceless labiodental fricative' },
     { char: 'ق', name: 'Qaaf', key: 'q / 8', desc: 'Voiceless uvular stop' },
     { char: 'ك', name: 'Kaaf', key: 'k', desc: 'Voiceless velar stop' },
     { char: 'ل', name: 'Laam', key: 'l', desc: 'Alveolar lateral approximant' },
     { char: 'م', name: 'Meem', key: 'm', desc: 'Bilabial nasal' },
     { char: 'ن', name: 'Noon', key: 'n', desc: 'Dental nasal' },
-    { char: 'ه', name: 'Haa', key: 'h', desc: 'Voiceless glottal fricative' },
+    { char: 'ه', name: 'Haa (glottal)', key: 'h', desc: 'Voiceless glottal fricative' },
     { char: 'و', name: 'Waaw', key: 'w / u / oo', desc: 'Semivowel w / long u' },
     { char: 'ي', name: 'Yaa', key: 'y / i / ee', desc: 'Semivowel y / long i' },
-    { char: 'ى', name: 'Alif Maqsura', key: 'Y / aa', desc: 'Dagger alif ending' }
+    { char: 'ى', name: 'Alif Maqsura', key: 'Y', desc: 'Dagger alif ending' },
+    { char: 'ّ', name: 'Shadda', key: '~', desc: 'Consonant doubling / gemination' },
+    { char: 'ً', name: 'Fathatan', key: 'an', desc: 'Nunation vowel an' },
+    { char: 'ٍ', name: 'Kasratan', key: 'in', desc: 'Nunation vowel in' },
+    { char: 'ٌ', name: 'Dammatan', key: 'un', desc: 'Nunation vowel un' }
   ];
 
   const FARSI_GUIDE = [
@@ -94,49 +100,54 @@
     { char: 'ع', name: 'Ayn', key: "' / 3", desc: 'Glottal stop in Persian' },
     { char: 'غ', name: 'Ghayn', key: 'gh', desc: 'Guttural gh sound' },
     { char: 'ف', name: 'Fe', key: 'f', desc: 'f sound' },
-    { char: 'ق', name: 'Qaf', key: 'q / gh / 8', desc: 'q sound' },
-    { char: 'ک', name: 'Ke (Persian)', key: 'k', desc: 'Persian specific Kaf' },
+    { char: 'ق', name: 'Qaf', key: 'q / 8', desc: 'q sound' },
+    { char: 'ک', name: 'Ke (Persian)', key: 'k', desc: 'Persian specific Kaf (ک)' },
     { char: 'گ', name: 'Gaf (Persian)', key: 'g', desc: 'Persian specific: hard g sound' },
     { char: 'ل', name: 'Lam', key: 'l', desc: 'l sound' },
     { char: 'م', name: 'Mim', key: 'm', desc: 'm sound' },
     { char: 'ن', name: 'Nun', key: 'n', desc: 'n sound' },
     { char: 'و', name: 'Vav', key: 'v / w / u', desc: 'v or u sound' },
     { char: 'ه', name: 'He', key: 'h / e', desc: 'h or soft e sound' },
-    { char: 'ی', name: 'Ye (Persian)', key: 'y / i', desc: 'Persian specific Ye (without dots)' }
+    { char: 'ی', name: 'Ye (Persian)', key: 'y / i', desc: 'Persian specific Ye without dots (ی)' },
+    { char: '\u200C', name: 'ZWNJ (Nim-fasele)', key: '_', desc: 'Zero-Width Non-Joiner (e.g. می\u200Cخواهم)' },
+    { char: 'ء', name: 'Hamze', key: "' / 2", desc: 'Glottal catch' },
+    { char: 'ئ', name: 'Ye ba Hamze', key: "y'", desc: 'Ye with hamze above' }
   ];
 
   const GREEK_GUIDE = [
-    { char: 'α', name: 'Alpha', key: 'a (A=Α)', desc: 'Short / long a' },
-    { char: 'β', name: 'Beta', key: 'b (B=Β)', desc: 'v / b sound' },
+    { char: 'α', name: 'Alpha', key: 'a (A=Α)', desc: 'Short / long a sound' },
+    { char: 'β', name: 'Beta', key: 'b / v (B/V=Β)', desc: 'v / b sound' },
     { char: 'γ', name: 'Gamma', key: 'g (G=Γ)', desc: 'g / gh sound' },
-    { char: 'δ', name: 'Delta', key: 'd (D=Δ)', desc: 'th (as in "then") / d' },
+    { char: 'δ', name: 'Delta', key: 'd (D=Δ)', desc: 'th (as in "then") / d sound' },
     { char: 'ε', name: 'Epsilon', key: 'e (E=Ε)', desc: 'Short e sound' },
     { char: 'ζ', name: 'Zeta', key: 'z (Z=Ζ)', desc: 'z sound' },
     { char: 'η', name: 'Eta', key: 'h (H=Η)', desc: 'Long e / ee sound' },
-    { char: 'θ', name: 'Theta', key: 'th / q (Q=Θ)', desc: 'th (as in "think")' },
+    { char: 'θ', name: 'Theta', key: 'th / q (TH/Q=Θ)', desc: 'th (as in "think")' },
     { char: 'ι', name: 'Iota', key: 'i (I=Ι)', desc: 'i / ee sound' },
-    { char: 'κ', name: 'Kappa', key: 'k / c (K=Κ)', desc: 'k sound' },
+    { char: 'κ', name: 'Kappa', key: 'k / c (K/C=Κ)', desc: 'k sound' },
     { char: 'λ', name: 'Lambda', key: 'l (L=Λ)', desc: 'l sound' },
     { char: 'μ', name: 'Mu', key: 'm (M=Μ)', desc: 'm sound' },
     { char: 'ν', name: 'Nu', key: 'n (N=Ν)', desc: 'n sound' },
-    { char: 'ξ', name: 'Xi', key: 'x (X=Ξ)', desc: 'x / ks sound' },
+    { char: 'ξ', name: 'Xi', key: 'x / ks (X=Ξ)', desc: 'ks / x sound' },
     { char: 'ο', name: 'Omicron', key: 'o (O=Ο)', desc: 'Short o sound' },
     { char: 'π', name: 'Pi', key: 'p (P=Π)', desc: 'p sound' },
     { char: 'ρ', name: 'Rho', key: 'r (R=Ρ)', desc: 'r sound' },
     { char: 'σ / ς', name: 'Sigma', key: 's (S=Σ)', desc: 's sound (auto-turns into ς at word end)' },
     { char: 'τ', name: 'Tau', key: 't (T=Τ)', desc: 't sound' },
-    { char: 'υ', name: 'Upsilon', key: 'u / y (U=Υ)', desc: 'u / i sound' },
-    { char: 'φ', name: 'Phi', key: 'f / ph (F=Φ)', desc: 'f / ph sound' },
-    { char: 'χ', name: 'Chi', key: 'ch (CH=Χ)', desc: 'kh / ch sound' },
+    { char: 'υ', name: 'Upsilon', key: 'u / y (U/Y=Υ)', desc: 'u / i sound' },
+    { char: 'φ', name: 'Phi', key: 'f / ph (F/PH=Φ)', desc: 'f / ph sound' },
+    { char: 'χ', name: 'Chi', key: 'ch / kh (CH/KH=Χ)', desc: 'kh / ch sound' },
     { char: 'ψ', name: 'Psi', key: 'ps (PS=Ψ)', desc: 'ps sound' },
     { char: 'ω', name: 'Omega', key: 'w (W=Ω)', desc: 'Long o sound' },
-    { char: 'ά', name: 'Accented Alpha', key: "a'", desc: 'Tonos / accent' },
-    { char: 'έ', name: 'Accented Epsilon', key: "e'", desc: 'Tonos / accent' },
-    { char: 'ή', name: 'Accented Eta', key: "h'", desc: 'Tonos / accent' },
-    { char: 'ί', name: 'Accented Iota', key: "i'", desc: 'Tonos / accent' },
-    { char: 'ό', name: 'Accented Omicron', key: "o'", desc: 'Tonos / accent' },
-    { char: 'ύ', name: 'Accented Upsilon', key: "u' / y'", desc: 'Tonos / accent' },
-    { char: 'ώ', name: 'Accented Omega', key: "w'", desc: 'Tonos / accent' }
+    { char: 'ά', name: 'Accented Alpha', key: "a' (A'=Ά)", desc: 'Alpha with tonos accent' },
+    { char: 'έ', name: 'Accented Epsilon', key: "e' (E'=Έ)", desc: 'Epsilon with tonos accent' },
+    { char: 'ή', name: 'Accented Eta', key: "h' (H'=Ή)", desc: 'Eta with tonos accent' },
+    { char: 'ί', name: 'Accented Iota', key: "i' (I'=Ί)", desc: 'Iota with tonos accent' },
+    { char: 'ό', name: 'Accented Omicron', key: "o' (O'=Ό)", desc: 'Omicron with tonos accent' },
+    { char: 'ύ', name: 'Accented Upsilon', key: "u' (U'=Ύ)", desc: 'Upsilon with tonos accent' },
+    { char: 'ώ', name: 'Accented Omega', key: "w' (W'=Ώ)", desc: 'Omega with tonos accent' },
+    { char: ';', name: 'Erotimatiko', key: '? / ;', desc: 'Greek question mark' },
+    { char: '·', name: 'Ano Teleia', key: ':', desc: 'Greek semicolon / colon' }
   ];
 
   // Build the Enhanced Studio Editor Modal DOM
@@ -151,16 +162,16 @@
         </div>
 
         <div class="dev-topbar-center">
-          <!-- Writing Mode Selector -->
-          <label style="font-size: 0.8rem; color: var(--muted); display: flex; align-items: center; gap: 0.35rem;">
-            <span>Mode:</span>
-            <select class="dev-tool-select" id="dev-writing-mode-select">
-              <option value="standard">Standard (Latin)</option>
-              <option value="arabic">Arabic (العربية)</option>
-              <option value="farsi">Farsi (فارسی)</option>
-              <option value="greek">Greek (Ελληνικά)</option>
-            </select>
-          </label>
+          <!-- Writing Mode Pill Buttons -->
+          <div class="dev-mode-group">
+            <span class="dev-mode-label">Mode:</span>
+            <div class="dev-mode-pills" id="dev-mode-pills">
+              <button type="button" class="dev-mode-pill active" data-mode="standard" title="Latin writing mode">Latin</button>
+              <button type="button" class="dev-mode-pill" data-mode="arabic" title="Arabic phonetic writing mode">العربية</button>
+              <button type="button" class="dev-mode-pill" data-mode="farsi" title="Farsi / Persian phonetic writing mode">فارسی</button>
+              <button type="button" class="dev-mode-pill" data-mode="greek" title="Greek phonetic writing mode">Ελληνικά</button>
+            </div>
+          </div>
 
           <!-- View Mode (Split, Edit, Preview) -->
           <select class="dev-view-select" id="dev-view-mode-select" title="Switch layout">
@@ -198,15 +209,19 @@
         <!-- Slide-out Letter Guide Drawer -->
         <aside class="dev-guide-drawer collapsed" id="dev-guide-drawer">
           <div class="dev-guide-top">
-            <span class="dev-guide-title" id="dev-guide-title">Letter Guide</span>
+            <span class="dev-guide-title">Letter Guides</span>
             <button type="button" class="dev-btn-cancel" style="padding: 0.15rem 0.4rem; font-size: 0.75rem;" id="dev-guide-close-btn">✕</button>
           </div>
+          <div class="dev-guide-tabs" id="dev-guide-tabs">
+            <button type="button" class="dev-guide-tab active" data-guide-lang="arabic">العربية (Arabic)</button>
+            <button type="button" class="dev-guide-tab" data-guide-lang="farsi">فارسی (Farsi)</button>
+            <button type="button" class="dev-guide-tab" data-guide-lang="greek">Ελληνικά (Greek)</button>
+          </div>
+          <div class="dev-guide-mode-banner" id="dev-guide-mode-banner"></div>
           <div class="dev-guide-search">
             <input type="search" id="dev-guide-search-input" placeholder="Search letter or key..." autocomplete="off">
           </div>
-          <div class="dev-guide-instruction" id="dev-guide-instruction">
-            Type Latin keys to approximate characters. Click any letter to insert.
-          </div>
+          <div class="dev-guide-instruction" id="dev-guide-instruction"></div>
           <div class="dev-guide-list" id="dev-guide-list"></div>
         </aside>
       </div>
@@ -269,12 +284,13 @@
   const wordCount = document.getElementById('dev-word-count');
   const studioWorkspace = document.getElementById('dev-studio-workspace');
   const previewContent = document.getElementById('dev-preview-content');
-  const writingModeSelect = document.getElementById('dev-writing-mode-select');
+  const modePills = document.getElementById('dev-mode-pills');
   const viewModeSelect = document.getElementById('dev-view-mode-select');
   const guideToggleBtn = document.getElementById('dev-guide-toggle-btn');
   const guideDrawer = document.getElementById('dev-guide-drawer');
   const guideCloseBtn = document.getElementById('dev-guide-close-btn');
-  const guideTitle = document.getElementById('dev-guide-title');
+  const guideTabs = document.getElementById('dev-guide-tabs');
+  const guideModeBanner = document.getElementById('dev-guide-mode-banner');
   const guideInstruction = document.getElementById('dev-guide-instruction');
   const guideList = document.getElementById('dev-guide-list');
   const guideSearchInput = document.getElementById('dev-guide-search-input');
@@ -284,10 +300,20 @@
   let selectedSuggestIndex = 0;
   let triggerStartPos = -1;
   let currentWritingMode = 'standard';
+  let activeGuideLang = 'arabic';
 
   // =========================================================================
   // Transliteration Engine (Greek, Arabic, Farsi)
   // =========================================================================
+
+  function insertTextAtCaret(textToInsert, replaceCharsBack = 0) {
+    textarea.focus();
+    const selStart = textarea.selectionStart;
+    const selEnd = textarea.selectionEnd;
+    const start = Math.max(0, selStart - replaceCharsBack);
+    textarea.setRangeText(textToInsert, start, selEnd, 'end');
+    textarea.dispatchEvent(new Event('input', { bubbles: true }));
+  }
 
   function handleTransliteration(e) {
     if (currentWritingMode === 'standard') return;
@@ -313,13 +339,8 @@
 
     if (replaced !== null) {
       e.preventDefault();
-      if (replaced.combinesWithPrev) {
-        // Replace previous character + insert new combined character
-        textarea.setSelectionRange(caretPos - 1, caretPos);
-        document.execCommand('insertText', false, replaced.char);
-      } else {
-        document.execCommand('insertText', false, replaced.char);
-      }
+      const replaceBack = replaced.combinesWithPrev ? 1 : 0;
+      insertTextAtCaret(replaced.char, replaceBack);
       updateLivePreview();
       updateWordCount();
       checkReferenceTrigger();
@@ -336,25 +357,34 @@
     if (prevChar === 'Π' && key.toLowerCase() === 'h') return { char: 'Φ', combinesWithPrev: true };
     if (prevChar === 'κ' && key === 'h') return { char: 'χ', combinesWithPrev: true };
     if (prevChar === 'Κ' && key.toLowerCase() === 'h') return { char: 'Χ', combinesWithPrev: true };
+    if (prevChar === 'κ' && key === 's') return { char: 'ξ', combinesWithPrev: true };
+    if (prevChar === 'Κ' && key.toLowerCase() === 's') return { char: 'Ξ', combinesWithPrev: true };
 
     // Accented vowels (typing ' after vowel)
     if (key === "'") {
-      const accents = { 'α': 'ά', 'ε': 'έ', 'η': 'ή', 'ι': 'ί', 'ο': 'ό', 'υ': 'ύ', 'ω': 'ώ', 'Α': 'Ά', 'Ε': 'Έ', 'Η': 'Ή', 'Ι': 'Ί', 'Ο': 'Ό', 'Υ': 'Ύ', 'Ω': 'Ώ' };
+      const accents = {
+        'α': 'ά', 'ε': 'έ', 'η': 'ή', 'ι': 'ί', 'ο': 'ό', 'υ': 'ύ', 'ω': 'ώ',
+        'Α': 'Ά', 'Ε': 'Έ', 'Η': 'Ή', 'Ι': 'Ί', 'Ο': 'Ό', 'Υ': 'Ύ', 'Ω': 'Ώ'
+      };
       if (accents[prevChar]) return { char: accents[prevChar], combinesWithPrev: true };
     }
 
     // Word-final sigma: if previous was 'σ' and user types space or punctuation
-    if (prevChar === 'σ' && /[\s.,;:!?)\]}]/.test(key)) {
-      return null; // will naturally convert if desired, handled below
+    if (prevChar === 'σ' && /[\s.,;:!?)\]}\-]/.test(key)) {
+      return { char: 'ς' + key, combinesWithPrev: true };
     }
+
+    // Punctuation
+    if (key === '?') return { char: ';', combinesWithPrev: false };
+    if (key === ':') return { char: '·', combinesWithPrev: false };
 
     // Single character map
     const map = {
-      'a': 'α', 'b': 'β', 'g': 'γ', 'd': 'δ', 'e': 'ε', 'z': 'ζ',
+      'a': 'α', 'b': 'β', 'v': 'β', 'g': 'γ', 'd': 'δ', 'e': 'ε', 'z': 'ζ',
       'h': 'η', 'q': 'θ', 'i': 'ι', 'k': 'κ', 'c': 'κ', 'l': 'λ',
       'm': 'μ', 'n': 'ν', 'x': 'ξ', 'o': 'ο', 'p': 'π', 'r': 'ρ',
       's': 'σ', 't': 'τ', 'u': 'υ', 'y': 'υ', 'f': 'φ', 'w': 'ω',
-      'A': 'Α', 'B': 'Β', 'G': 'Γ', 'D': 'Δ', 'E': 'Ε', 'Z': 'Ζ',
+      'A': 'Α', 'B': 'Β', 'V': 'Β', 'G': 'Γ', 'D': 'Δ', 'E': 'Ε', 'Z': 'Ζ',
       'H': 'Η', 'Q': 'Θ', 'I': 'Ι', 'K': 'Κ', 'C': 'Κ', 'L': 'Λ',
       'M': 'Μ', 'N': 'Ν', 'X': 'Ξ', 'O': 'Ο', 'P': 'Π', 'R': 'Ρ',
       'S': 'Σ', 'T': 'Τ', 'U': 'Υ', 'Y': 'Υ', 'F': 'Φ', 'W': 'Ω'
@@ -372,15 +402,25 @@
     if (prevChar === 'د' && key === 'h') return { char: 'ذ', combinesWithPrev: true };
     if (prevChar === 'ج' && key === 'h') return { char: 'غ', combinesWithPrev: true };
     if (prevChar === 'ا' && key === 'a') return { char: 'آ', combinesWithPrev: true };
-    if (prevChar === 'ت' && key === 'a') return { char: 'ة', combinesWithPrev: true };
+    if (prevChar === 'ا' && key === "'") return { char: 'أ', combinesWithPrev: true };
+    if (prevChar === 'ا' && key === 'i') return { char: 'إ', combinesWithPrev: true };
+    if (prevChar === 'و' && key === "'") return { char: 'ؤ', combinesWithPrev: true };
+    if (prevChar === 'ي' && key === "'") return { char: 'ئ', combinesWithPrev: true };
+    if (prevChar === 'ت' && (key === 'a' || key === 'h')) return { char: 'ة', combinesWithPrev: true };
+    if (prevChar === 'ه' && key === 'h') return { char: 'ح', combinesWithPrev: true };
+    if (prevChar === 'س' && key === 's') return { char: 'ص', combinesWithPrev: true };
+    if (prevChar === 'د' && key === 'd') return { char: 'ض', combinesWithPrev: true };
+    if (prevChar === 'ت' && key === 't') return { char: 'ط', combinesWithPrev: true };
+    if (prevChar === 'ز' && key === 'z') return { char: 'ظ', combinesWithPrev: true };
 
     const map = {
       'a': 'ا', 'b': 'ب', 't': 'ت', 'j': 'ج', 'H': 'ح', '7': 'ح',
       'x': 'خ', '5': 'خ', 'd': 'د', 'r': 'ر', 'z': 'ز', 's': 'س',
       'S': 'ص', '9': 'ص', 'D': 'ض', 'T': 'ط', '6': 'ط', 'Z': 'ظ',
-      '3': 'ع', 'c': 'ع', 'f': 'ف', 'q': 'ق', '8': 'ق', 'k': 'ك',
+      '3': 'ع', 'c': 'ع', 'g': 'غ', 'f': 'ف', 'q': 'ق', '8': 'ق', 'k': 'ك',
       'l': 'ل', 'm': 'م', 'n': 'ن', 'h': 'ه', 'w': 'و', 'u': 'و',
-      'y': 'ي', 'i': 'ي', "'": 'ء', '2': 'ء', 'A': 'آ', 'Y': 'ى'
+      'y': 'ي', 'i': 'ي', "'": 'ء', '2': 'ء', 'A': 'آ', 'Y': 'ى',
+      '~': 'ّ'
     };
 
     if (map[key]) return { char: map[key], combinesWithPrev: false };
@@ -389,11 +429,13 @@
 
   function transliterateFarsi(key, prevChar) {
     // Multi-key combinations
-    if ((prevChar === 'س' || prevChar === 's') && key === 'h') return { char: 'ش', combinesWithPrev: true };
-    if ((prevChar === 'ك' || prevChar === 'ک') && key === 'h') return { char: 'خ', combinesWithPrev: true };
-    if ((prevChar === 'c' || prevChar === 'ج') && key === 'h') return { char: 'چ', combinesWithPrev: true };
-    if ((prevChar === 'z' || prevChar === 'ز') && key === 'h') return { char: 'ژ', combinesWithPrev: true };
+    if (prevChar === 'س' && key === 'h') return { char: 'ش', combinesWithPrev: true };
+    if (prevChar === 'ک' && key === 'h') return { char: 'خ', combinesWithPrev: true };
+    if (prevChar === 'چ' && key === 'h') return { char: 'چ', combinesWithPrev: true };
+    if (prevChar === 'ز' && key === 'h') return { char: 'ژ', combinesWithPrev: true };
     if (prevChar === 'ا' && key === 'a') return { char: 'آ', combinesWithPrev: true };
+    if (prevChar === 'ی' && key === "'") return { char: 'ئ', combinesWithPrev: true };
+    if (prevChar === 'ه' && key === 'h') return { char: 'ح', combinesWithPrev: true };
 
     // Persian specific + standard
     const map = {
@@ -402,7 +444,7 @@
       'r': 'ر', 'z': 'ز', 's': 'س', 'S': 'ص', 'Z': 'ض', 'T': 'ط',
       'f': 'ف', 'q': 'ق', 'k': 'ک', 'g': 'گ', 'l': 'ل', 'm': 'م',
       'n': 'ن', 'v': 'و', 'w': 'و', 'u': 'و', 'y': 'ی', 'i': 'ی',
-      "'": 'ء', 'A': 'آ'
+      "'": 'ء', '2': 'ء', 'A': 'آ', '_': '\u200C'
     };
 
     if (map[key]) return { char: map[key], combinesWithPrev: false };
@@ -440,7 +482,17 @@
 
   function setWritingMode(mode) {
     currentWritingMode = mode;
+
+    // Update pill buttons in topbar
+    if (modePills) {
+      modePills.querySelectorAll('.dev-mode-pill').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-mode') === mode);
+      });
+    }
+
     const isRtl = mode === 'arabic' || mode === 'farsi';
+    textarea.dir = isRtl ? 'rtl' : 'ltr';
+    previewContent.dir = isRtl ? 'rtl' : 'ltr';
 
     if (isRtl) {
       textarea.classList.add('rtl-mode');
@@ -451,19 +503,28 @@
     }
 
     if (mode === 'standard') {
-      guideDrawer.classList.add('collapsed');
-      guideToggleBtn.classList.remove('active');
+      if (!guideDrawer.classList.contains('collapsed')) {
+        renderGuide(activeGuideLang, guideSearchInput ? guideSearchInput.value : '');
+      }
     } else {
+      activeGuideLang = mode;
       renderGuide(mode);
       guideDrawer.classList.remove('collapsed');
       guideToggleBtn.classList.add('active');
     }
   }
 
-  writingModeSelect.addEventListener('change', (e) => {
-    setWritingMode(e.target.value);
-    textarea.focus();
-  });
+  if (modePills) {
+    modePills.addEventListener('click', (e) => {
+      const btn = e.target.closest('.dev-mode-pill');
+      if (!btn) return;
+      const mode = btn.getAttribute('data-mode');
+      if (mode) {
+        setWritingMode(mode);
+        textarea.focus();
+      }
+    });
+  }
 
   viewModeSelect.addEventListener('change', (e) => {
     const val = e.target.value;
@@ -475,8 +536,8 @@
   guideToggleBtn.addEventListener('click', () => {
     const isCollapsed = guideDrawer.classList.contains('collapsed');
     if (isCollapsed) {
-      const mode = currentWritingMode === 'standard' ? 'arabic' : currentWritingMode;
-      renderGuide(mode);
+      const lang = currentWritingMode === 'standard' ? activeGuideLang : currentWritingMode;
+      renderGuide(lang);
       guideDrawer.classList.remove('collapsed');
       guideToggleBtn.classList.add('active');
     } else {
@@ -494,27 +555,45 @@
   // Letter Guide Drawer Rendering
   // =========================================================================
 
-  function renderGuide(mode, filterQuery = '') {
+  function renderGuide(lang, filterQuery = '') {
+    activeGuideLang = lang;
     let guideData = [];
     let title = '';
     let instruction = '';
 
-    if (mode === 'arabic') {
+    if (lang === 'arabic') {
       guideData = ARABIC_GUIDE;
-      title = 'Arabic Letters (العربية)';
-      instruction = 'Type Latin phonetic keys to produce Arabic letters. Click any letter to insert directly.';
-    } else if (mode === 'farsi') {
+      title = 'Arabic (العربية)';
+      instruction = 'Phonetic keys: sh → ش, kh → خ, th → ث, dh → ذ, 3/c → ع, 7/H → ح, S/9 → ص, D → ض, T/6 → ط, Z → ظ. Click any character to insert.';
+    } else if (lang === 'farsi') {
       guideData = FARSI_GUIDE;
-      title = 'Farsi Alphabet (فارسی)';
-      instruction = 'Includes Persian specific letters (پ, چ, ژ, گ). Type Latin keys or click to insert.';
-    } else if (mode === 'greek') {
+      title = 'Farsi (فارسی)';
+      instruction = 'Persian specials: p → پ, ch/c → چ, zh → ژ, g → گ, k → ک, y → ی, _ → ZWNJ (نیم‌فاصله). Click any character to insert.';
+    } else if (lang === 'greek') {
       guideData = GREEK_GUIDE;
-      title = 'Greek Alphabet (Ελληνικά)';
-      instruction = "Type 'th' for θ, 'ps' for ψ, 'ch' for χ, 'w' for ω, and ' after vowel for accents (ά, έ). Click to insert.";
+      title = 'Greek (Ελληνικά)';
+      instruction = "Phonetic keys: th/q → θ, ps → ψ, ch/kh → χ, w → ω, ? → ;, : → ·, a' → ά, e' → έ. Word-ending s automatically becomes ς. Click to insert.";
     }
 
-    guideTitle.textContent = title;
-    guideInstruction.textContent = instruction;
+    // Update active tab in guide drawer
+    if (guideTabs) {
+      guideTabs.querySelectorAll('.dev-guide-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.getAttribute('data-guide-lang') === lang);
+      });
+    }
+
+    // Update mode banner in guide drawer
+    if (guideModeBanner) {
+      if (currentWritingMode === lang) {
+        guideModeBanner.innerHTML = `<span class="dev-guide-mode-status">✓ Active Typing Mode (${title})</span>`;
+      } else {
+        guideModeBanner.innerHTML = `<button type="button" class="dev-guide-switch-mode-btn" data-switch-to="${lang}">⚡ Switch Editor to ${title} Mode</button>`;
+      }
+    }
+
+    if (guideInstruction) {
+      guideInstruction.textContent = instruction;
+    }
 
     const q = filterQuery.trim().toLowerCase();
     const filtered = guideData.filter(item => {
@@ -522,19 +601,44 @@
       return item.char.includes(q) || item.name.toLowerCase().includes(q) || item.key.toLowerCase().includes(q) || item.desc.toLowerCase().includes(q);
     });
 
-    guideList.innerHTML = filtered.map(item => `
-      <div class="dev-guide-row" data-insert-char="${escapeHtml(item.char)}" title="${escapeHtml(item.desc)}">
-        <div class="dev-guide-char-box">
-          <span class="dev-guide-char">${item.char}</span>
-          <span class="dev-guide-name">${escapeHtml(item.name)}</span>
+    if (guideList) {
+      guideList.innerHTML = filtered.map(item => `
+        <div class="dev-guide-row" data-insert-char="${escapeHtml(item.char.split(' / ')[0])}" title="${escapeHtml(item.desc)}">
+          <div class="dev-guide-char-box">
+            <span class="dev-guide-char">${item.char}</span>
+            <span class="dev-guide-name">${escapeHtml(item.name)}</span>
+          </div>
+          <span class="dev-guide-key">${escapeHtml(item.key)}</span>
         </div>
-        <span class="dev-guide-key">${escapeHtml(item.key)}</span>
-      </div>
-    `).join('');
+      `).join('');
+    }
+  }
+
+  if (guideTabs) {
+    guideTabs.addEventListener('click', (e) => {
+      const tab = e.target.closest('.dev-guide-tab');
+      if (!tab) return;
+      const lang = tab.getAttribute('data-guide-lang');
+      if (lang) {
+        renderGuide(lang, guideSearchInput ? guideSearchInput.value : '');
+      }
+    });
+  }
+
+  if (guideModeBanner) {
+    guideModeBanner.addEventListener('click', (e) => {
+      const btn = e.target.closest('.dev-guide-switch-mode-btn');
+      if (!btn) return;
+      const target = btn.getAttribute('data-switch-to');
+      if (target) {
+        setWritingMode(target);
+        textarea.focus();
+      }
+    });
   }
 
   guideSearchInput.addEventListener('input', (e) => {
-    renderGuide(currentWritingMode, e.target.value);
+    renderGuide(activeGuideLang, e.target.value);
   });
 
   guideList.addEventListener('click', (e) => {
@@ -543,8 +647,7 @@
     const char = row.getAttribute('data-insert-char');
     if (!char) return;
 
-    textarea.focus();
-    document.execCommand('insertText', false, char);
+    insertTextAtCaret(char, 0);
     updateLivePreview();
     updateWordCount();
   });
@@ -562,16 +665,12 @@
 
     // Auto-detect writing mode from language folder (e.g. ar -> arabic, fa -> farsi, grc/el -> greek)
     if (filepath.startsWith('ar/')) {
-      writingModeSelect.value = 'arabic';
       setWritingMode('arabic');
     } else if (filepath.startsWith('fa/')) {
-      writingModeSelect.value = 'farsi';
       setWritingMode('farsi');
     } else if (filepath.startsWith('grc/') || filepath.startsWith('el/')) {
-      writingModeSelect.value = 'greek';
       setWritingMode('greek');
     } else {
-      writingModeSelect.value = 'standard';
       setWritingMode('standard');
     }
 

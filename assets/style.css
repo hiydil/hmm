@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Minimal Lexicon Theme - Spacious, Typographic & Breathable
+   Minimal Lexicon Theme - Spacious, Typographic & Forest Green Accents
    ========================================================================== */
 
 :root {
@@ -8,31 +8,48 @@
   --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
   /* Warm Bookish Natural Light Palette */
-  --bg: #faf9f6;
-  --text: #222222;
-  --muted: #6e6e6e;
-  --faint: #999999;
-  --border: #e8e6e1;
-  --link: #111111;
-  --link-underline: rgba(0, 0, 0, 0.25);
-  --link-hover: #000000;
-  --highlight: #f2f0ea;
+  --bg: #f9f8f5;
+  --text: #1d211e;
+  --muted: #5e6861;
+  --faint: #8d9890;
+  --border: #e2e6e2;
+  --link: #1e4a35;
+  --link-underline: rgba(30, 74, 53, 0.35);
+  --link-hover: #123324;
+  --highlight: #f0f4f1;
   --search-bg: #ffffff;
+
+  /* Forest Green Signatures */
+  --forest-primary: #1e4a35;
+  --forest-hover: #123324;
+  --forest-light: #ebf3ee;
+  --forest-border: #c8dacd;
+  --forest-border-subtle: #dbe6de;
+  --forest-tag-text: #183e2c;
+  --forest-tag-lang: #2d6b4a;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    /* Soft Dark Obsidian */
-    --bg: #161719;
-    --text: #e4e4e4;
-    --muted: #959595;
-    --faint: #666666;
-    --border: #292a2e;
-    --link: #f0f0f0;
-    --link-underline: rgba(255, 255, 255, 0.3);
-    --link-hover: #ffffff;
-    --highlight: #212226;
-    --search-bg: #1d1e22;
+    /* Soft Dark Obsidian with Pine & Moss Accents */
+    --bg: #141715;
+    --text: #e1e7e2;
+    --muted: #8d9a90;
+    --faint: #636f66;
+    --border: #242c26;
+    --link: #6db98d;
+    --link-underline: rgba(109, 185, 141, 0.4);
+    --link-hover: #8fd0aa;
+    --highlight: #1b221d;
+    --search-bg: #181f1a;
+
+    --forest-primary: #5ba579;
+    --forest-hover: #79bf94;
+    --forest-light: #18271e;
+    --forest-border: #2a4534;
+    --forest-border-subtle: #22372a;
+    --forest-tag-text: #8ed2a9;
+    --forest-tag-lang: #63a47d;
   }
 }
 
@@ -84,11 +101,11 @@ body.home-body {
 
 .home-title {
   font-family: var(--font-body);
-  font-size: 3.6rem;
+  font-size: 3.8rem;
   font-weight: 500;
   letter-spacing: -0.04em;
   margin-bottom: 2rem;
-  color: var(--text);
+  color: var(--forest-primary);
 }
 
 .home-search-wrapper {
@@ -100,7 +117,13 @@ body.home-body {
   font-size: 1.15rem;
   padding: 0.95rem 1.25rem;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+  border-color: var(--forest-border);
+  box-shadow: 0 2px 10px rgba(30, 74, 53, 0.04);
+}
+
+.home-search-input:focus {
+  border-color: var(--forest-primary);
+  box-shadow: 0 0 0 3px rgba(30, 74, 53, 0.12);
 }
 
 .home-languages {
@@ -117,7 +140,7 @@ body.home-body {
 }
 
 .home-lang-link:hover {
-  color: var(--text);
+  color: var(--forest-primary);
   text-decoration: underline;
   text-underline-offset: 4px;
 }
@@ -146,10 +169,15 @@ header.site-header {
 .brand {
   font-family: var(--font-body);
   font-weight: 600;
-  font-size: 1.4rem;
+  font-size: 1.45rem;
   letter-spacing: -0.03em;
-  color: var(--text);
+  color: var(--forest-primary);
   text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.brand:hover {
+  opacity: 0.85;
 }
 
 nav.site-nav, nav.footer-nav {
@@ -164,7 +192,7 @@ nav.site-nav a, nav.footer-nav a {
 }
 
 nav.site-nav a:hover, nav.site-nav a.active, nav.footer-nav a:hover {
-  color: var(--text);
+  color: var(--forest-primary);
   text-decoration: underline;
   text-underline-offset: 4px;
 }
@@ -193,8 +221,8 @@ nav.site-nav a:hover, nav.site-nav a.active, nav.footer-nav a:hover {
 }
 
 .search-input:focus {
-  border-color: var(--text);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  border-color: var(--forest-primary);
+  box-shadow: 0 0 0 3px rgba(30, 74, 53, 0.1);
 }
 
 .search-dropdown {
@@ -203,13 +231,13 @@ nav.site-nav a:hover, nav.site-nav a.active, nav.footer-nav a:hover {
   left: 0;
   right: 0;
   background: var(--search-bg);
-  border: 1px solid var(--border);
+  border: 1px solid var(--forest-border);
   border-radius: 6px;
   max-height: 420px;
   overflow-y: auto;
   z-index: 100;
   display: none;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 25px rgba(20, 50, 35, 0.08);
 }
 
 .search-dropdown.open {
@@ -231,17 +259,18 @@ nav.site-nav a:hover, nav.site-nav a.active, nav.footer-nav a:hover {
 }
 
 .search-item:hover, .search-item.selected {
-  background: var(--highlight);
+  background: var(--forest-light);
 }
 
 .search-item-title {
   font-weight: 600;
   font-family: var(--font-body);
   font-size: 1.15rem;
+  color: var(--forest-primary);
 }
 
 .search-item-meta {
-  color: var(--muted);
+  color: var(--forest-tag-lang);
   font-size: 0.75rem;
   margin-left: 0.6rem;
   text-transform: uppercase;
@@ -277,7 +306,10 @@ h1.entry-title {
 .entry-tag {
   font-family: var(--font-mono);
   font-size: 0.85rem;
-  color: var(--faint);
+  color: var(--forest-tag-lang);
+  background: var(--forest-light);
+  padding: 0.15rem 0.45rem;
+  border-radius: 3px;
   font-weight: normal;
   margin-left: 0.6rem;
   vertical-align: middle;
@@ -293,7 +325,7 @@ h1.entry-title {
   font-weight: 600;
   margin-top: 1rem;
   margin-bottom: 1rem;
-  color: var(--text);
+  color: var(--forest-primary);
   letter-spacing: -0.01em;
 }
 
@@ -306,11 +338,15 @@ h1.entry-title {
 }
 
 .analysis-block blockquote {
-  border-left: 2px solid var(--muted);
+  border-left: 3px solid var(--forest-primary);
   padding-left: 1.25rem;
   margin: 1.75rem 0;
   color: var(--muted);
   font-style: italic;
+  background: var(--forest-light);
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-radius: 0 4px 4px 0;
 }
 
 .analysis-block ul, .analysis-block ol {
@@ -323,21 +359,24 @@ h1.entry-title {
 
 .analysis-divider {
   border: 0;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--forest-border-subtle);
   margin: 3.5rem 0;
 }
 
-/* Cross-References (Tag Style) */
+/* ==========================================================================
+   Cross-References (Forest Green Tag Style)
+   ========================================================================== */
+
 .ref-tag {
   display: inline-flex;
   align-items: baseline;
   gap: 0.35rem;
-  padding: 0.12rem 0.5rem;
+  padding: 0.12rem 0.55rem;
   margin: 0 0.15rem;
-  background-color: var(--highlight);
-  border: 1px solid var(--border);
+  background-color: var(--forest-light);
+  border: 1px solid var(--forest-border);
   border-radius: 4px;
-  color: var(--text);
+  color: var(--forest-tag-text);
   text-decoration: none;
   font-family: var(--font-serif);
   font-size: 0.88em;
@@ -348,17 +387,18 @@ h1.entry-title {
 }
 
 .ref-tag:hover {
-  background-color: var(--border);
-  border-color: var(--muted);
-  color: var(--link);
+  background-color: var(--forest-border);
+  border-color: var(--forest-primary);
+  color: var(--forest-hover);
 }
 
 .ref-tag-lang {
   font-family: var(--font-mono);
   font-size: 0.72em;
-  color: var(--muted);
+  color: var(--forest-tag-lang);
   text-transform: uppercase;
   letter-spacing: 0.03em;
+  font-weight: 600;
 }
 
 .ref-tag-label {
@@ -368,19 +408,25 @@ h1.entry-title {
 
 .ref-tag.ref-stub {
   border-style: dashed;
+  border-color: var(--faint);
   color: var(--muted);
+  background: transparent;
   cursor: help;
 }
 
-/* Hover Preview Tooltip */
+/* ==========================================================================
+   Hover Preview Tooltip (Forest Green Accented)
+   ========================================================================== */
+
 .preview-tooltip {
   position: fixed;
   background: var(--search-bg);
   color: var(--text);
-  border: 1px solid var(--border);
+  border: 1px solid var(--forest-border);
+  border-top: 3px solid var(--forest-primary);
   border-radius: 6px;
   padding: 1rem 1.25rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 24px rgba(20, 50, 35, 0.12);
   max-width: 340px;
   z-index: 200;
   pointer-events: none;
@@ -407,14 +453,15 @@ h1.entry-title {
   font-family: var(--font-body);
   font-size: 1.15rem;
   font-weight: 600;
-  color: var(--text);
+  color: var(--forest-primary);
 }
 
 .preview-tooltip-meta {
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  color: var(--muted);
+  color: var(--forest-tag-lang);
   text-transform: uppercase;
+  font-weight: 600;
 }
 
 .preview-tooltip-snippet {
@@ -424,7 +471,10 @@ h1.entry-title {
   color: var(--muted);
 }
 
-/* Backlinks */
+/* ==========================================================================
+   Backlinks
+   ========================================================================== */
+
 .backlinks-section {
   margin-top: 4.5rem;
   padding-top: 2rem;
@@ -439,7 +489,8 @@ h1.entry-title {
   text-transform: uppercase;
   letter-spacing: 0.06em;
   margin-bottom: 0.85rem;
-  color: var(--faint);
+  color: var(--forest-tag-lang);
+  font-weight: 600;
 }
 
 .backlinks-list {
@@ -450,17 +501,21 @@ h1.entry-title {
 }
 
 .backlinks-list a {
-  color: var(--link);
+  color: var(--forest-primary);
   text-decoration: underline;
   text-decoration-color: var(--link-underline);
   text-underline-offset: 4px;
 }
 
 .backlinks-list a:hover {
-  text-decoration-color: var(--link);
+  color: var(--forest-hover);
+  text-decoration-color: var(--forest-primary);
 }
 
-/* Listings & Index */
+/* ==========================================================================
+   Listings & Index
+   ========================================================================== */
+
 .index-section {
   margin-bottom: 3.5rem;
 }
@@ -473,6 +528,7 @@ h1.entry-title {
   padding-bottom: 0.5rem;
   border-bottom: 1px solid var(--border);
   letter-spacing: -0.01em;
+  color: var(--forest-primary);
 }
 
 .entry-list {
@@ -488,7 +544,7 @@ h1.entry-title {
 }
 
 .entry-list a {
-  color: var(--link);
+  color: var(--forest-primary);
   text-decoration: none;
   font-size: 1.3rem;
   font-weight: 500;
@@ -496,6 +552,7 @@ h1.entry-title {
 }
 
 .entry-list a:hover {
+  color: var(--forest-hover);
   text-decoration: underline;
   text-underline-offset: 4px;
 }
@@ -511,11 +568,14 @@ h1.entry-title {
 .entry-list .meta {
   font-family: var(--font-mono);
   font-size: 0.8rem;
-  color: var(--faint);
+  color: var(--forest-tag-lang);
   flex-shrink: 0;
 }
 
-/* Footer */
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
 footer.site-footer {
   margin-top: 5rem;
   padding-top: 2rem;
@@ -533,7 +593,7 @@ footer.site-footer a {
 }
 
 footer.site-footer a:hover {
-  color: var(--text);
+  color: var(--forest-primary);
   text-decoration: underline;
   text-underline-offset: 3px;
 }

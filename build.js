@@ -96,13 +96,16 @@ function scanDictionary(rootDir) {
     for (const f of fs.readdirSync(langDir, { withFileTypes: true })) {
       if (f.isFile() && f.name.endsWith('.md')) {
         const term = f.name.replace(/\.md$/, '');
-        const parsed = parseMarkdown(fs.readFileSync(path.join(langDir, f.name), 'utf-8'), term);
+        const relPath = `${lang}/${f.name}`;
+        const rawContent = fs.readFileSync(path.join(langDir, f.name), 'utf-8');
+        const parsed = parseMarkdown(rawContent, term);
 
         const entry = {
           id: `${lang}:${term}`,
           lang,
           type: 'word',
           term,
+          relPath,
           url: `/${lang}/${sanitizeSlug(term)}/`,
           title: parsed.title,
           sections: parsed.sections,
@@ -122,13 +125,16 @@ function scanDictionary(rootDir) {
         for (const sf of fs.readdirSync(subDir, { withFileTypes: true })) {
           if (sf.isFile() && sf.name.endsWith('.md')) {
             const term = sf.name.replace(/\.md$/, '');
-            const parsed = parseMarkdown(fs.readFileSync(path.join(subDir, sf.name), 'utf-8'), term);
+            const relPath = `${lang}/${subfolder}/${sf.name}`;
+            const rawContent = fs.readFileSync(path.join(subDir, sf.name), 'utf-8');
+            const parsed = parseMarkdown(rawContent, term);
 
             const entry = {
               id: `${lang}.${type}:${term}`,
               lang,
               type,
               term,
+              relPath,
               url: `/${lang}/${subfolder}/${sanitizeSlug(term)}/`,
               title: parsed.title,
               sections: parsed.sections,
@@ -229,10 +235,14 @@ function escapeHtml(str) {
     .replace(/"/g, '&quot;');
 }
 
-function renderLayout({ title, content, activeNav = '', languages = [] }) {
+function renderLayout({ title, content, activeNav = '', languages = [], isDev = false }) {
   const navLinks = languages.map(l =>
     `<a href="/${l}/" class="${activeNav === l ? 'active' : ''}">${l}</a>`
   ).join('\n        ');
+
+  const devHeaderActions = isDev ? `
+    <button type="button" class="dev-action-btn" data-dev-new title="New entry (Press 'n')">+ new</button>
+  ` : '';
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -241,14 +251,21 @@ function renderLayout({ title, content, activeNav = '', languages = [] }) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${escapeHtml(title)}</title>
   <link rel="stylesheet" href="/assets/style.css">
+  ${isDev ? '<link rel="stylesheet" href="/assets/dev-editor.css">' : ''}
 </head>
 <body>
   <header class="site-header">
     <div class="header-top">
-      <a href="/" class="brand">hmm</a>
-      <nav class="site-nav">
-        ${navLinks}
-      </nav>
+      <div style="display: flex; align-items: baseline; gap: 0.5rem;">
+        <a href="/" class="brand">hmm</a>
+        ${isDev ? '<span class="dev-badge" title="Local in-browser editor is active">dev</span>' : ''}
+      </div>
+      <div class="dev-header-actions">
+        <nav class="site-nav">
+          ${navLinks}
+        </nav>
+        ${devHeaderActions}
+      </div>
     </div>
     <div class="search-wrapper">
       <input type="search" id="search-input" class="search-input" placeholder="search entries... (/)" autocomplete="off">
@@ -269,11 +286,12 @@ function renderLayout({ title, content, activeNav = '', languages = [] }) {
 
   <div id="preview-tooltip" class="preview-tooltip" aria-hidden="true"></div>
   <script src="/assets/app.js"></script>
+  ${isDev ? '<script src="/assets/dev-editor.js"></script>' : ''}
 </body>
 </html>`;
 }
 
-function renderEntryPage(entry, languages) {
+function renderEntryPage(entry, languages, isDev) {
   const sectionsHtml = entry.sections.map((s) => {
     return `
       <section class="analysis-block">
@@ -304,14 +322,20 @@ function renderEntryPage(entry, languages) {
     </div>
   ` : '';
 
+  const editBtn = isDev ? `
+    <button type="button" class="dev-action-btn" data-dev-edit="${entry.relPath}" title="Edit this entry in browser (Press 'e')">edit</button>
+  ` : '';
+
   return renderLayout({
     title: `${entry.title} (${entry.lang})`,
     activeNav: entry.lang,
     languages,
+    isDev,
     content: `
       <article>
-        <header class="entry-header">
+        <header class="entry-header" style="display: flex; justify-content: space-between; align-items: baseline;">
           <h1 class="entry-title">${escapeHtml(entry.title)} <span class="entry-tag">${entry.lang}${entry.type !== 'word' ? ' &middot; ' + entry.type : ''}</span></h1>
+          ${editBtn}
         </header>
         ${sectionsHtml}
         ${backlinksHtml}
@@ -320,13 +344,14 @@ function renderEntryPage(entry, languages) {
   });
 }
 
-function renderIndexGroup(title, entries, activeNav, languages) {
+function renderIndexGroup(title, entries, activeNav, languages, isDev) {
   const sorted = [...entries].sort((a, b) => a.title.localeCompare(b.title));
 
   return renderLayout({
     title,
     activeNav,
     languages,
+    isDev,
     content: `
       <div class="index-section">
         <h2>${escapeHtml(title)}</h2>
@@ -346,10 +371,16 @@ function renderIndexGroup(title, entries, activeNav, languages) {
   });
 }
 
-function renderHomePage(languages) {
+function renderHomePage(languages, isDev) {
   const langPills = languages.map(l =>
     `<a href="/${l}/" class="home-lang-link">${l}</a>`
   ).join(' &middot; ');
+
+  const devNewBtn = isDev ? `
+    <div style="margin-top: 1.5rem;">
+      <button type="button" class="dev-action-btn" data-dev-new title="New entry (Press 'n')">+ new entry</button>
+    </div>
+  ` : '';
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -358,10 +389,14 @@ function renderHomePage(languages) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>hmm</title>
   <link rel="stylesheet" href="/assets/style.css">
+  ${isDev ? '<link rel="stylesheet" href="/assets/dev-editor.css">' : ''}
 </head>
 <body class="home-body">
   <main class="home-main">
-    <h1 class="home-title">hmm</h1>
+    <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-bottom: 2rem;">
+      <h1 class="home-title" style="margin-bottom: 0;">hmm</h1>
+      ${isDev ? '<span class="dev-badge" title="Local Editor Active">dev</span>' : ''}
+    </div>
 
     <div class="search-wrapper home-search-wrapper">
       <input type="search" id="search-input" class="search-input home-search-input" placeholder="search entries..." autocomplete="off" autofocus>
@@ -371,15 +406,17 @@ function renderHomePage(languages) {
     <nav class="home-languages">
       ${langPills}
     </nav>
+    ${devNewBtn}
   </main>
 
   <div id="preview-tooltip" class="preview-tooltip" aria-hidden="true"></div>
   <script src="/assets/app.js"></script>
+  ${isDev ? '<script src="/assets/dev-editor.js"></script>' : ''}
 </body>
 </html>`;
 }
 
-export async function buildSite() {
+export async function buildSite({ isDev = false } = {}) {
   const rootDir = __dirname;
   const distDir = path.join(rootDir, 'dist');
 
@@ -401,7 +438,7 @@ export async function buildSite() {
   for (const entry of entries) {
     const targetDir = path.join(distDir, entry.url.replace(/^\//, ''));
     fs.mkdirSync(targetDir, { recursive: true });
-    fs.writeFileSync(path.join(targetDir, 'index.html'), renderEntryPage(entry, languages), 'utf-8');
+    fs.writeFileSync(path.join(targetDir, 'index.html'), renderEntryPage(entry, languages, isDev), 'utf-8');
   }
 
   // Language indexes
@@ -414,11 +451,11 @@ export async function buildSite() {
   for (const [lang, list] of Object.entries(entriesByLang)) {
     const langDir = path.join(distDir, lang);
     fs.mkdirSync(langDir, { recursive: true });
-    fs.writeFileSync(path.join(langDir, 'index.html'), renderIndexGroup(lang, list, lang, languages), 'utf-8');
+    fs.writeFileSync(path.join(langDir, 'index.html'), renderIndexGroup(lang, list, lang, languages, isDev), 'utf-8');
   }
 
   // Homepage: centered search bar
-  fs.writeFileSync(path.join(distDir, 'index.html'), renderHomePage(languages), 'utf-8');
+  fs.writeFileSync(path.join(distDir, 'index.html'), renderHomePage(languages, isDev), 'utf-8');
 
   // Static Search index
   const searchIndex = entries.map(e => ({
@@ -439,11 +476,13 @@ export async function buildSite() {
     fs.cpSync(assetsSrc, assetsDist, { recursive: true });
   }
 
-  console.log(`Generated ${entries.length} pages in ./dist with languages: ${languages.join(', ')}`);
+  const modeText = isDev ? ' (dev mode with in-browser editor)' : ' (production static build)';
+  console.log(`Generated ${entries.length} pages in ./dist${modeText}`);
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  buildSite().catch(err => {
+  const isDev = process.argv.includes('--dev');
+  buildSite({ isDev }).catch(err => {
     console.error(err);
     process.exit(1);
   });

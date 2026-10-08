@@ -86,18 +86,29 @@ Reference any other word, pattern, or coined word using the `@` notation:
 
 ---
 
+## ✍️ In-Browser Editor (Local Development)
+
+When running locally with `npm run dev`, you can browse and edit your entries directly in the browser:
+
+- **Edit any entry**: Press **`e`** (or click the **`edit`** button in the header) while viewing any entry.
+- **Save changes**: Press **`Cmd+S`** or **`Ctrl+S`** (or click **`Save`**). The dev server writes the changes directly to your Markdown file on disk and rebuilds the site instantly.
+- **Create a new entry**: Press **`n`** (or click **`+ new`**) to create a new word, pattern, or coinage.
+- **Zero build bloat**: When built for production (`npm run build` / Netlify), the editor scripts and buttons are **completely omitted**. The production site is 100% pure static HTML.
+
+---
+
 ## 🚀 Running Locally
 
 ```bash
-# 1. Install dependency (only marked is used)
+# 1. Install dependency
 npm install
 
-# 2. Build the static site into ./dist
-npm run build
-
-# 3. Start local development server (with live file-watch & auto-rebuild)
+# 2. Start local development server with in-browser editor
 npm run dev
 # -> Opens http://localhost:3000
+
+# 3. Build pure static site for deployment (Netlify)
+npm run build
 ```
 
 ---
